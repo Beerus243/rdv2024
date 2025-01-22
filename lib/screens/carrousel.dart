@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rdv/screens/accueil.dart'; // Assurez-vous que le chemin est correct
 
 class CarouselPage extends StatefulWidget {
   @override
@@ -98,7 +99,11 @@ class _CarouselPage extends State<CarouselPage> {
                 ),
               ),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
+                // Appel correct de la classe Accueil avec la majuscule
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SwipeCardsExample()),
+                );
               },
               child: const Text(
                 "Suivant",

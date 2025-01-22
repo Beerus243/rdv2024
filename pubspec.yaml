@@ -14,6 +14,9 @@ dependencies:
   flutter_launcher_icons: ^0.14.2
   flutter_native_splash: ^2.4.3
   carousel_slider: ^5.0.0
+  flutter_card_swiper: ^7.0.2
+  card_swiper: ^3.0.1
+  swipe_cards: ^2.0.0+1
 
 dev_dependencies:
 
@@ -47,3 +50,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/
+    - assets/img/rhema.jpg
