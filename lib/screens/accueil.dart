@@ -58,7 +58,32 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("rdv"),
+        title: Row(
+          children: [
+            // Logo Application
+            Image.asset(
+              'assets/img/logotype.png',
+              height: 50,
+            ),
+          ],
+        ),
+        actions: [
+          // icon de notification
+          IconButton(
+            onPressed: () {
+              // TODO : ajourter la naviagation
+              print("Vous avez recu une notification");
+            },
+            icon: const Icon(Icons.notifications, color: Colors.black),
+          ),
+          IconButton(
+            onPressed: () {
+              // TODO : ajourter la naviagation
+              print("Vous est un génie");
+            },
+            icon: const Icon(Icons.settings, color: Colors.black),
+          )
+        ],
         backgroundColor: Colors.pinkAccent,
         centerTitle: true,
       ),
@@ -132,7 +157,10 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                     _matchEngine.currentItem?.like();
                   },
                   backgroundColor: Colors.green,
-                  child: const Icon(Icons.favorite, color: Colors.white),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

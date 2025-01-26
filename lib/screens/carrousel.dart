@@ -25,7 +25,7 @@ class _CarouselPage extends State<CarouselPage> {
           // Image d'arrière-plan
           Positioned.fill(
             child: Image.asset(
-              'assets/images/background.jpg',
+              'assets/img/4.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -87,7 +87,7 @@ class _CarouselPage extends State<CarouselPage> {
           ),
           // Bouton "Suivant"
           Positioned(
-            bottom: 50.0,
+            bottom: 30.0,
             right: 20.0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
