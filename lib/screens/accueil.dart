@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
@@ -57,13 +58,43 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar: CurvedNavigationBar(
+        buttonBackgroundColor: Colors.pinkAccent,
+        backgroundColor: Colors.white,
+        color: const Color.fromARGB(255, 240, 238, 238),
+        animationDuration: Duration(milliseconds: 300),
+        animationCurve: Curves.easeInOut,
+        items: <Widget>[
+          Icon(
+            Icons.person,
+            size: 30,
+          ),
+          Icon(
+            Icons.star_border,
+            size: 30,
+          ),
+          Icon(
+            Icons.chat_sharp,
+            size: 30,
+          ),
+          Icon(
+            Icons.person,
+            size: 30,
+          )
+        ],
+        onTap: (index) {
+          //
+        },
+      ),
       appBar: AppBar(
+        elevation: 10,
         title: Row(
           children: [
             // Logo Application
             Image.asset(
-              'assets/img/logotype.png',
-              height: 50,
+              'assets/img/logotype2.png',
+              height: 30,
             ),
           ],
         ),
@@ -74,14 +105,22 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
               // TODO : ajourter la naviagation
               print("Vous avez recu une notification");
             },
-            icon: const Icon(Icons.notifications, color: Colors.black),
+            icon: const Icon(
+              Icons.notifications,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
           IconButton(
             onPressed: () {
               // TODO : ajourter la naviagation
               print("Vous est un génie");
             },
-            icon: const Icon(Icons.settings, color: Colors.black),
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+              size: 30,
+            ),
           )
         ],
         backgroundColor: Colors.pinkAccent,
@@ -94,37 +133,44 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
               matchEngine: _matchEngine,
               itemBuilder: (BuildContext context, int index) {
                 final profile = _swipeItems[index].content;
-                return Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Stack(
-                    children: [
-                      // Image de profil
-                      Positioned.fill(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.asset(
-                            profile["image"],
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                return Center(
+                  child: Container(
+                    width: 400,
+                    height: 470,
+                    margin: EdgeInsets.only(bottom: 70),
+                    child: Card(
+                      elevation: 7,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                      // Détails du profil
-                      Positioned(
-                        bottom: 20,
-                        left: 20,
-                        child: Text(
-                          "${profile['name']}, ${profile['age']}",
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                      child: Stack(
+                        children: [
+                          // Image de profil
+                          Positioned.fill(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset(
+                                profile["image"],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          // Détails du profil
+                          Positioned(
+                            bottom: 10,
+                            left: 20,
+                            child: Text(
+                              "${profile['name']}, ${profile['age']}",
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 );
               },
@@ -141,7 +187,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
           ),
           // Boutons d'action (Like / Nope)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -149,19 +195,23 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                   onPressed: () {
                     _matchEngine.currentItem?.nope();
                   },
-                  backgroundColor: Colors.red,
-                  child: const Icon(Icons.close, color: Colors.white),
+                  child: Image.asset(
+                    "assets/icon/nope.png",
+                    width: 20,
+                    height: 20,
+                  ),
                 ),
                 FloatingActionButton(
                   onPressed: () {
                     _matchEngine.currentItem?.like();
                   },
-                  backgroundColor: Colors.green,
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
+                  child: Image.asset("assets/icon/like.png"),
                 ),
+                FloatingActionButton(
+                    onPressed: () {
+                      _matchEngine.currentItem?.superLike();
+                    },
+                    child: Image.asset("assets/icon/icon.png")),
               ],
             ),
           ),

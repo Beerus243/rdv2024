@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rdv/screens/LoginScreen.dart';
+import 'package:rdv/screens/accueil.dart';
 // Assurez-vous d'importer le fichier carrousel.dart
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xFFE73162),
       ),
-      home: const LoginScreen(),
+      home: SwipeCardsExample(),
     );
   }
 }
