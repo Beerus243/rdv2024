@@ -137,7 +137,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                   child: Container(
                     width: 400,
                     height: 470,
-                    margin: EdgeInsets.only(bottom: 70),
+                    // margin: EdgeInsets.only(bottom: 70),
                     child: Card(
                       elevation: 7,
                       shape: RoundedRectangleBorder(
@@ -164,7 +164,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -187,31 +187,57 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
           ),
           // Boutons d'action (Like / Nope)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 00.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    _matchEngine.currentItem?.nope();
-                  },
-                  child: Image.asset(
-                    "assets/icon/nope.png",
-                    width: 20,
-                    height: 20,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 100.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {
+                          _matchEngine.currentItem?.nope();
+                        },
+                        child: Image.asset("assets/img/nope.png",
+                            width: 60, height: 60, fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                          return Text("erreur chargement img");
+                        }),
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          _matchEngine.currentItem?.like();
+                        },
+                        child: Image.asset(
+                          "assets/img/icon.png",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      FloatingActionButton(
+                          onPressed: () {
+                            _matchEngine.currentItem?.superLike();
+                          },
+                          child: Image.asset(
+                            "assets/img/star.png",
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          )),
+                      FloatingActionButton(
+                          onPressed: () {
+                            _matchEngine.currentItem?.like();
+                          },
+                          child: Image.asset(
+                            "assets/img/message.png",
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          )),
+                    ],
                   ),
                 ),
-                FloatingActionButton(
-                  onPressed: () {
-                    _matchEngine.currentItem?.like();
-                  },
-                  child: Image.asset("assets/icon/like.png"),
-                ),
-                FloatingActionButton(
-                    onPressed: () {
-                      _matchEngine.currentItem?.superLike();
-                    },
-                    child: Image.asset("assets/icon/icon.png")),
               ],
             ),
           ),
