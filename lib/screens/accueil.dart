@@ -16,7 +16,8 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
       "name": "Rhema Lamar",
       "age": 25,
       "image": "assets/img/rhema.jpg",
-      "description": {
+      "description": "Voyageur et passionné de musique 🎶🌍",
+      "details": {
         "Signe astrologique": "♎ Balance",
         "Mode de vie": "Végétarien 🌱",
         "Passions": "Voyages, Musique, Photographie 📷",
@@ -26,7 +27,8 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
       "name": "Fabrice Malanga",
       "age": 22,
       "image": "assets/img/fabrice.jpg",
-      "description": {
+      "description": "Passionné de sport et de tech 🚀🏋️‍♂️",
+      "details": {
         "Signe astrologique": "♈ Bélier",
         "Mode de vie": "Omnivore 🍖",
         "Passions": "Sport, Programmation, Jeux Vidéo 🎮",
@@ -54,7 +56,6 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
         ),
       );
     }
-
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
   }
 
@@ -77,6 +78,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
         onTap: (index) {},
       ),
       appBar: AppBar(
+        elevation: 10,
         title: Row(
           children: [
             Image.asset(
@@ -85,6 +87,17 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            onPressed: () => print("Vous avez reçu une notification"),
+            icon:
+                const Icon(Icons.notifications, color: Colors.white, size: 30),
+          ),
+          IconButton(
+            onPressed: () => print("Vous êtes un génie"),
+            icon: const Icon(Icons.settings, color: Colors.white, size: 30),
+          ),
+        ],
         backgroundColor: Colors.pinkAccent,
         centerTitle: true,
       ),
@@ -92,16 +105,16 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
         child: Column(
           children: [
             SizedBox(
-              height: 550,
+              height: 550, // Pour éviter les débordements
               child: SwipeCards(
                 matchEngine: _matchEngine,
                 itemBuilder: (BuildContext context, int index) {
                   final profile = _swipeItems[index].content;
                   return Stack(
+                    alignment: Alignment.center,
                     children: [
-                      // Carte avec l'image et l'élévation
                       Card(
-                        elevation: 8,
+                        elevation: 7,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -110,14 +123,13 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                           child: Image.asset(
                             profile["image"],
                             fit: BoxFit.cover,
-                            height: 500,
+                            height: 400,
                             width: double.infinity,
                           ),
                         ),
                       ),
-                      // Nom et âge
                       Positioned(
-                        bottom: 70,
+                        bottom: 15,
                         left: 20,
                         child: Container(
                           padding:
@@ -136,11 +148,8 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                           ),
                         ),
                       ),
-                      // Boutons sur l'image
                       Positioned(
-                        bottom: 10,
-                        left: 0,
-                        right: 0,
+                        bottom: 20,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -169,47 +178,52 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                 },
               ),
             ),
-            const SizedBox(height: 20),
-            // Description sous la photo avec des divs colorés et élévation
-            Column(
-              children: _swipeItems[0]
-                  .content["description"]
-                  .entries
-                  .map<Widget>((entry) {
-                return Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.pinkAccent.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          entry.key,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pinkAccent,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                children: _profiles.map((profile) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (var entry
+                          in (profile["details"] as Map<String, String>)
+                              .entries)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  entry.key,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  entry.value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          entry.value,
-                          style: TextStyle(fontSize: 16, color: Colors.black87),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+                    ],
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
@@ -221,7 +235,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      elevation: 5, // Rétablissement de l'élévation
+      elevation: 5,
       child: Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
     );
   }
