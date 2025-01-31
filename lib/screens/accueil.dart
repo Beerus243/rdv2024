@@ -16,24 +16,27 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
       "name": "Rhema Lamar",
       "age": 25,
       "image": "assets/img/rhema.jpg",
+      "description": {
+        "Signe astrologique": "♎ Balance",
+        "Mode de vie": "Végétarien 🌱",
+        "Passions": "Voyages, Musique, Photographie 📷",
+      }
     },
     {
       "name": "Fabrice Malanga",
       "age": 22,
       "image": "assets/img/fabrice.jpg",
-    },
-    {
-      "name": "Melissa Malanga",
-      "age": 28,
-      "image": "assets/img/melissa.jpg",
+      "description": {
+        "Signe astrologique": "♈ Bélier",
+        "Mode de vie": "Omnivore 🍖",
+        "Passions": "Sport, Programmation, Jeux Vidéo 🎮",
+      }
     },
   ];
 
   @override
   void initState() {
     super.initState();
-
-    // Préparation des cartes
     for (var profile in _profiles) {
       _swipeItems.add(
         SwipeItem(
@@ -65,184 +68,161 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
         color: const Color.fromARGB(255, 240, 238, 238),
         animationDuration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInOut,
-        items: <Widget>[
-          Icon(
-            Icons.person,
-            size: 30,
-          ),
-          Icon(
-            Icons.star_border,
-            size: 30,
-          ),
-          Icon(
-            Icons.chat_sharp,
-            size: 30,
-          ),
-          Icon(
-            Icons.person,
-            size: 30,
-          )
+        items: const [
+          Icon(Icons.person, size: 30),
+          Icon(Icons.star_border, size: 30),
+          Icon(Icons.chat_sharp, size: 30),
+          Icon(Icons.person, size: 30),
         ],
-        onTap: (index) {
-          //
-        },
+        onTap: (index) {},
       ),
       appBar: AppBar(
-        elevation: 10,
         title: Row(
           children: [
-            // Logo Application
             Image.asset(
               'assets/img/logotype2.png',
               height: 30,
             ),
           ],
         ),
-        actions: [
-          // icon de notification
-          IconButton(
-            onPressed: () {
-              // TODO : ajourter la naviagation
-              print("Vous avez recu une notification");
-            },
-            icon: const Icon(
-              Icons.notifications,
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              // TODO : ajourter la naviagation
-              print("Vous est un génie");
-            },
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 30,
-            ),
-          )
-        ],
         backgroundColor: Colors.pinkAccent,
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SwipeCards(
-              matchEngine: _matchEngine,
-              itemBuilder: (BuildContext context, int index) {
-                final profile = _swipeItems[index].content;
-                return Center(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 550,
+              child: SwipeCards(
+                matchEngine: _matchEngine,
+                itemBuilder: (BuildContext context, int index) {
+                  final profile = _swipeItems[index].content;
+                  return Stack(
+                    children: [
+                      // Carte avec l'image et l'élévation
+                      Card(
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset(
+                            profile["image"],
+                            fit: BoxFit.cover,
+                            height: 500,
+                            width: double.infinity,
+                          ),
+                        ),
+                      ),
+                      // Nom et âge
+                      Positioned(
+                        bottom: 70,
+                        left: 20,
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            "${profile['name']}, ${profile['age']}",
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Boutons sur l'image
+                      Positioned(
+                        bottom: 10,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildActionButton("assets/img/nope.png",
+                                () => _matchEngine.currentItem?.nope()),
+                            const SizedBox(width: 15),
+                            _buildActionButton("assets/img/icon.png",
+                                () => _matchEngine.currentItem?.like()),
+                            const SizedBox(width: 15),
+                            _buildActionButton("assets/img/star.png",
+                                () => _matchEngine.currentItem?.superLike()),
+                            const SizedBox(width: 15),
+                            _buildActionButton("assets/img/message.png",
+                                () => _matchEngine.currentItem?.like()),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                onStackFinished: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text("Vous avez vu tous les profils !")),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Description sous la photo avec des divs colorés et élévation
+            Column(
+              children: _swipeItems[0]
+                  .content["description"]
+                  .entries
+                  .map<Widget>((entry) {
+                return Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   child: Container(
-                    width: 400,
-                    height: 470,
-                    // margin: EdgeInsets.only(bottom: 70),
-                    child: Card(
-                      elevation: 7,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Stack(
-                        children: [
-                          // Image de profil
-                          Positioned.fill(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset(
-                                profile["image"],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.pinkAccent.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          entry.key,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pinkAccent,
                           ),
-                          // Détails du profil
-                          Positioned(
-                            bottom: 10,
-                            left: 20,
-                            child: Text(
-                              "${profile['name']}, ${profile['age']}",
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          entry.value,
+                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                        ),
+                      ],
                     ),
                   ),
                 );
-              },
-              onStackFinished: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text("Vous avez vu tous les profils !")),
-                );
-              },
-              itemChanged: (SwipeItem item, int index) {
-                print("Profil actuel : ${item.content['name']}");
-              },
+              }).toList(),
             ),
-          ),
-          // Boutons d'action (Like / Nope)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 00.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 100.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FloatingActionButton(
-                        onPressed: () {
-                          _matchEngine.currentItem?.nope();
-                        },
-                        child: Image.asset("assets/img/nope.png",
-                            width: 60, height: 60, fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                          return Text("erreur chargement img");
-                        }),
-                      ),
-                      FloatingActionButton(
-                        onPressed: () {
-                          _matchEngine.currentItem?.like();
-                        },
-                        child: Image.asset(
-                          "assets/img/icon.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      FloatingActionButton(
-                          onPressed: () {
-                            _matchEngine.currentItem?.superLike();
-                          },
-                          child: Image.asset(
-                            "assets/img/star.png",
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          )),
-                      FloatingActionButton(
-                          onPressed: () {
-                            _matchEngine.currentItem?.like();
-                          },
-                          child: Image.asset(
-                            "assets/img/message.png",
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          )),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildActionButton(String imagePath, VoidCallback onPressed) {
+    return FloatingActionButton(
+      onPressed: onPressed,
+      backgroundColor: Colors.white,
+      elevation: 5, // Rétablissement de l'élévation
+      child: Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
     );
   }
 }
