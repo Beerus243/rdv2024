@@ -129,7 +129,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                         ),
                       ),
                       Positioned(
-                        bottom: 90,
+                        bottom: 70,
                         left: 10,
                         child: Container(
                           padding:
