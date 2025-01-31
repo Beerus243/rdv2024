@@ -123,14 +123,14 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                           child: Image.asset(
                             profile["image"],
                             fit: BoxFit.cover,
-                            height: 400,
-                            width: double.infinity,
+                            height: 600,
+                            width: 600,
                           ),
                         ),
                       ),
                       Positioned(
-                        bottom: 15,
-                        left: 20,
+                        bottom: 90,
+                        left: 10,
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -149,7 +149,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                         ),
                       ),
                       Positioned(
-                        bottom: 20,
+                        bottom: 10,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -179,7 +179,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
               child: Column(
                 children: _profiles.map((profile) {
                   return Column(
