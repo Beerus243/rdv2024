@@ -34,6 +34,17 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
         "Passions": "Sport, Programmation, Jeux Vidéo 🎮",
       }
     },
+    {
+      "name": "Melissa",
+      "age": 25,
+      "image": "assets/img/melissa.jpg",
+      "description": "Passionné de sport et de tech 🚀🏋️‍♂️",
+      "details": {
+        "Signe astrologique": "♈ Bélier",
+        "Mode de vie": "Omnivore 🍖",
+        "Passions": "Sport, Programmation, Jeux Vidéo 🎮",
+      }
+    },
   ];
 
   @override
@@ -62,18 +73,18 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 231, 230, 230),
       bottomNavigationBar: CurvedNavigationBar(
         buttonBackgroundColor: Colors.pinkAccent,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 231, 230, 230),
         color: const Color.fromARGB(255, 240, 238, 238),
         animationDuration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInOut,
         items: const [
-          Icon(Icons.person, size: 30),
-          Icon(Icons.star_border, size: 30),
-          Icon(Icons.chat_sharp, size: 30),
-          Icon(Icons.person, size: 30),
+          Icon(Icons.person, size: 38),
+          Icon(Icons.explore, size: 38),
+          Icon(Icons.message, size: 38),
+          Icon(Icons.shop, size: 38),
         ],
         onTap: (index) {},
       ),
@@ -114,7 +125,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                     alignment: Alignment.center,
                     children: [
                       Card(
-                        elevation: 7,
+                        elevation: 3,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -141,7 +152,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                           child: Text(
                             "${profile['name']}, ${profile['age']}",
                             style: const TextStyle(
-                              fontSize: 24,
+                              fontSize: 27,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -194,7 +205,7 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                             width: double.infinity,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.redAccent,
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Column(
@@ -204,15 +215,15 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
                                   entry.key,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontSize: 20,
                                   ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   entry.value,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -234,9 +245,9 @@ class _SwipeCardsExampleState extends State<SwipeCardsExample> {
   Widget _buildActionButton(String imagePath, VoidCallback onPressed) {
     return FloatingActionButton(
       onPressed: onPressed,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       elevation: 5,
-      child: Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
+      child: Image.asset(imagePath, width: 80, height: 80, fit: BoxFit.cover),
     );
   }
 }
